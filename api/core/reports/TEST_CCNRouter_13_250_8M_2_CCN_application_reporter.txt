@@ -1,0 +1,17 @@
+WebApp stats for scenario TEST_CCNRouter_13_250_8M_2
+sim_time: 43200.1000
+
+oppo_cahce_hit: 431
+oppo_cache_miss: 4235
+drop_list:  0
+drop_pit:  865
+drop_nonce:  163
+query_count: 381
+duplicated_query: 219
+static_cache_hit: 137
+static_cache_miss: 445
+response_count: 290
+average_interval: 1461
+caching_gain_index: 66.20
+retrieval_latency_reduction: 17.64
+interest_satisfaction_rate: 83.33

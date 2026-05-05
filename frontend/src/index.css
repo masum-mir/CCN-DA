@@ -1,0 +1,296 @@
+/* Fonts */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap");
+ 
+:root {
+  /* Shell (sidebar + header) */
+  --bg: #0b0f1a;
+  --bg-1: #0f1423;
+  --bg-2: #141929;
+  --bg-3: #1a2035;
+  --bg-hover: #1e2740;
+  --border: rgba(255, 255, 255, 0.055);
+  --border-md: rgba(255, 255, 255, 0.09);
+  --border-hi: rgba(255, 255, 255, 0.14);
+
+  /* Content area */
+  --c-bg: #f7f8fc;
+  --c-bg-1: #ffffff;
+  --c-bg-2: #f0f3f9;
+  --c-bg-3: #e6ebf5;
+  --c-bg-hover: #ebf0f9;
+  --c-border: rgba(20, 35, 80, 0.07);
+  --c-border-md: rgba(20, 35, 80, 0.11);
+  --c-border-hi: rgba(20, 35, 80, 0.19);
+
+  /* Primary - blue (accent, replaces flashy teal) */
+  --accent: #2e6fda;
+  --accent-dim: rgba(46, 111, 218, 0.1);
+  --accent-glow: rgba(46, 111, 218, 0.2);
+  --accent-hi: #4d87e8;
+  --accent-dark: #1a56b8;
+
+  /* Shell accent (softer cyan for dark bg) */
+  --s-accent: #4fc3e8;
+  --s-accent-dim: rgba(79, 195, 232, 0.12);
+
+  /* Secondary - slate indigo */
+  --indigo: #5b6cf0;
+  --indigo-dim: rgba(91, 108, 240, 0.11);
+
+  /* Semantic */
+  --green: #22c55e;
+  --green-dim: rgba(34, 197, 94, 0.1);
+  --red: #e84343;
+  --red-dim: rgba(232, 67, 67, 0.1);
+  --amber: #f59e0b;
+  --amber-dim: rgba(245, 158, 11, 0.1);
+
+  /* Shell text */
+  --tx-1: #e8edf7;
+  --tx-2: #8a97b8;
+  --tx-3: #4d5a78;
+  --tx-acc: #4fc3e8;
+
+  /* Content text (on white) */
+  --ctx-1: #0d1a38;
+  --ctx-2: #2d3d62;
+  --ctx-3: #627090;
+  --ctx-acc: #2e6fda;
+
+  --sans: "DM Sans", system-ui, sans-serif;
+  --mono: "DM Mono", "Fira Mono", monospace;
+
+  --sidebar-w: 232px;
+  --header-h: 56px;
+
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ctx-2);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(20, 35, 80, 0.13);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(20, 35, 80, 0.24);
+}
+
+/* form */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+  min-width: 0;
+}
+.form-group label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ctx-3);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.form-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.form-row > .form-group {
+  min-width: 130px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px 11px;
+  background: #ffffff;
+  border: 1px solid var(--c-border-md);
+  border-radius: var(--r-sm);
+  color: var(--ctx-1);
+  font-family: var(--sans);
+  font-size: 13px;
+  outline: none;
+  transition:
+    border-color 0.16s,
+    box-shadow 0.16s;
+  -webkit-appearance: none;
+}
+input:focus,
+select:focus {
+  border-color: rgba(46, 111, 218, 0.5);
+  box-shadow: 0 0 0 3px rgba(46, 111, 218, 0.09);
+}
+input::placeholder {
+  color: var(--ctx-3);
+  opacity: 0.7;
+}
+select {
+  cursor: pointer;
+}
+select option {
+  background: #ffffff;
+  color: var(--ctx-1);
+}
+
+input[type="file"] {
+  background: var(--c-bg-2);
+  border: 1px dashed var(--c-border-md);
+  color: var(--ctx-2);
+  cursor: pointer;
+  padding: 7px 10px;
+  font-size: 12px;
+}
+input[type="file"]:hover {
+  border-color: rgba(46, 111, 218, 0.4);
+}
+
+/* alert */
+.alert {
+  padding: 9px 13px;
+  border-radius: var(--r-sm);
+  font-size: 12.5px;
+  border-left: 3px solid;
+  margin-top: 8px;
+}
+.alert-success {
+  background: #f0fdf4;
+  border-color: #22c55e;
+  color: #15803d;
+}
+.alert-danger {
+  background: #fff1f1;
+  border-color: var(--red);
+  color: #b91c1c;
+}
+.alert-warning {
+  background: #fffbeb;
+  border-color: var(--amber);
+  color: #92400e;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  padding: 7px 15px;
+  transition: all 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+}
+.btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(46, 111, 218, 0.25);
+}
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-hi);
+  box-shadow: 0 4px 18px rgba(46, 111, 218, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--c-bg-2);
+  color: var(--ctx-2);
+  border: 1px solid var(--c-border-md);
+}
+.btn-secondary:hover:not(:disabled) {
+  border-color: rgba(46, 111, 218, 0.3);
+  color: var(--ctx-1);
+  background: var(--c-bg-hover);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ctx-2);
+  border: 1px solid var(--c-border);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--c-bg-hover);
+  border-color: var(--c-border-md);
+  color: var(--ctx-1);
+}
+
+.btn-danger {
+  background: var(--red);
+  color: white;
+  box-shadow: 0 2px 10px rgba(232, 67, 67, 0.22);
+}
+.btn-danger:hover:not(:disabled) {
+  box-shadow: 0 4px 18px rgba(232, 67, 67, 0.38);
+  transform: translateY(-1px);
+}
+
+.btn-run {
+  background: linear-gradient(135deg, #1a7a4a, #1a56b8);
+  color: white;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 11px 22px;
+  border-radius: var(--r-md);
+  box-shadow: 0 4px 18px rgba(26, 122, 74, 0.22);
+  letter-spacing: 0.02em;
+}
+.btn-run:hover:not(:disabled) {
+  box-shadow: 0 6px 26px rgba(26, 122, 74, 0.36);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 5px 11px;
+  font-size: 11.5px;
+}
+.btn-xs {
+  padding: 3px 8px;
+  font-size: 10.5px;
+  border-radius: 5px;
+}

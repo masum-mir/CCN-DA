@@ -1,0 +1,25 @@
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.file-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px;
+  background: var(--c-bg-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--ctx-2);
+  transition: border-color 0.13s;
+}
+.file-list li:hover {
+  border-color: rgba(46, 111, 218, 0.3);
+  color: var(--ctx-1);
+}

@@ -1,0 +1,71 @@
+.spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.batch-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 111, 218, 0.06),
+    rgba(91, 108, 240, 0.03)
+  );
+  border: 1px solid rgba(46, 111, 218, 0.13);
+  border-radius: var(--r-lg);
+  padding: 18px 22px;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(46, 111, 218, 0.07);
+}
+.batch-preview-card::before {
+  content: "";
+  position: absolute;
+  top: -50px;
+  right: -50px;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(
+    circle,
+    rgba(46, 111, 218, 0.08),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.bpc-icon {
+  font-size: 30px;
+  opacity: 0.35;
+}
+.bpc-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--ctx-3);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+}
+.bpc-num {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--ctx-acc);
+  font-family: var(--mono);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.bpc-sub {
+  font-size: 11px;
+  color: var(--ctx-3);
+  margin-top: 3px;
+  font-family: var(--mono);
+}

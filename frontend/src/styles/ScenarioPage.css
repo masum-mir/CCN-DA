@@ -1,0 +1,48 @@
+.import-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: linear-gradient(
+    135deg,
+    rgba(46, 111, 218, 0.05),
+    rgba(91, 108, 240, 0.03)
+  );
+  border: 1px solid rgba(46, 111, 218, 0.16);
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+.import-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ctx-acc);
+  white-space: nowrap;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.file-input-inline {
+  flex: 1;
+  min-width: 180px;
+  padding: 6px 10px;
+  background: #ffffff;
+  border: 1px solid var(--c-border-md);
+  border-radius: var(--r-sm);
+  color: var(--ctx-2);
+  font-size: 12.5px;
+  font-family: var(--sans);
+  cursor: pointer;
+}
+.file-input-inline:hover {
+  border-color: rgba(46, 111, 218, 0.35);
+}
+.import-status {
+  font-size: 12px;
+  font-weight: 600;
+}
+.import-status.ok {
+  color: #16a34a;
+}
+.import-status.err {
+  color: var(--red);
+}

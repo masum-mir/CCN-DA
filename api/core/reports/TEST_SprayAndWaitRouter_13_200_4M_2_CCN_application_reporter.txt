@@ -1,0 +1,17 @@
+WebApp stats for scenario TEST_SprayAndWaitRouter_13_200_4M_2
+sim_time: 43200.1000
+
+oppo_cahce_hit: 209
+oppo_cache_miss: 2548
+drop_list:  0
+drop_pit:  516
+drop_nonce:  80
+query_count: 385
+duplicated_query: 215
+static_cache_hit: 89
+static_cache_miss: 292
+response_count: 202
+average_interval: 1328
+caching_gain_index: 59.60
+retrieval_latency_reduction: 18.14
+interest_satisfaction_rate: 53.70

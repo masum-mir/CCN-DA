@@ -1,0 +1,20 @@
+Message stats for scenario TEST_CCNRouter_27_150_4M_2
+sim_time: 43200.1000
+created: 2607
+started: 36481
+relayed: 19764
+aborted: 16716
+dropped: 17664
+removed: 0
+delivered: 1332
+delivery_prob: 0.5109
+response_prob: 0.0000
+overhead_ratio: 13.8378
+latency_avg: 2561.8529
+latency_med: 1921.2000
+hopcount_avg: 2.8536
+hopcount_med: 3
+buffertime_avg: 5823.5156
+buffertime_med: 7125.6000
+rtt_avg: NaN
+rtt_med: NaN

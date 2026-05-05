@@ -1,0 +1,17 @@
+WebApp stats for scenario TEST_EpidemicRouter_13_150_8M_2
+sim_time: 43200.1000
+
+oppo_cahce_hit: 3220
+oppo_cache_miss: 6244
+drop_list:  0
+drop_pit:  2368
+drop_nonce:  7784
+query_count: 371
+duplicated_query: 229
+static_cache_hit: 212
+static_cache_miss: 736
+response_count: 343
+average_interval: 1065
+caching_gain_index: 90.91
+retrieval_latency_reduction: -1.79
+interest_satisfaction_rate: 90.74
