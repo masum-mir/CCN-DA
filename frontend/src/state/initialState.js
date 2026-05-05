@@ -173,6 +173,7 @@ function joinArr(v) {
 export function applyParsedConfig(cfg, setS) {
   setS((prev) => {
     const s = { ...prev };
+    console.log("SS:: ", s);
     const get = (k) => cfg[k];
     const setf = (obj, field, key) => {
       const v = get(key);
@@ -195,6 +196,7 @@ export function applyParsedConfig(cfg, setS) {
     setf(s, "warmup", "MovementModel.warmup");
 
     const cg = { ...s.commonGroup };
+    
     if (get("Group.router")) {
       let r = get("Group.router");
       if (typeof r === "string")

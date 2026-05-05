@@ -45,17 +45,17 @@ export default function App() {
   // Hooks
   const { addLog } = useLogger(setS);
   const { handleImport } = useConfig(s, upd, setS);
-  console.log("handleImport:: ", handleImport);
+  console.log("handleImport:: ", s);
 
   const { handleRun, handleStop, handleAverager, handleAnalysis } =
     useSimulation(s, upd, addLog, setTab);
-  console.log(
-    "Handle info:: ",
-    handleRun,
-    handleStop,
-    handleAverager,
-    handleAnalysis,
-  );
+  // console.log(
+  //   "Handle info:: ",
+  //   handleRun,
+  //   handleStop,
+  //   handleAverager,
+  //   handleAnalysis,
+  // );
 
   const batch = calcBatch(s);
 

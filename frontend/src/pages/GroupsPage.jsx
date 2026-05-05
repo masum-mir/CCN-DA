@@ -48,6 +48,7 @@ const APP_DEFAULTS = {
 };
 
 export default function GroupsPage({ s, upd, updn }) {
+  console.log("group data: ", s);
   const ng = s.newGroup;
   const appType = ng.applicationType || "Producer";
 
@@ -77,7 +78,7 @@ export default function GroupsPage({ s, upd, updn }) {
         routeType: ng.routeType,
         router: ng.router,
         activeTimes: ng.activeTimes,
-        messageTTL: ng.msgTtl,
+        msgTtl: ng.msgTtl,
         applicationType: appType,
         interface1: ng.interface1 || "btInterface",
         bufferSize: ng.bufferSize || "",
@@ -412,7 +413,7 @@ export default function GroupsPage({ s, upd, updn }) {
                 <td style={{ fontFamily: "var(--mono)", fontSize: 11 }}>
                   {g.bufferSize || "—"}
                 </td>
-                <td style={{ fontFamily: "var(--mono)" }}>{g.messageTTL}</td>
+                <td style={{ fontFamily: "var(--mono)" }}>{g.msgTtl}</td>
                 <td>
                   <button
                     className="btn btn-danger btn-xs"
