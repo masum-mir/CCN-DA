@@ -13,7 +13,7 @@ export function calcBatch(s) {
 // buildSettingsContent
 export function buildSettingsContent(s) {
   console.log("State snapshot:", s);
-  let name = s.scenarioName || "TEST";
+  let name = s.scenarioName || "CCN_routing";
   if (s.nameAddDateTime) {
     const d = new Date();
     name += `_${d.getFullYear()}_${String(d.getMonth() + 1).padStart(2, "0")}_${String(d.getDate()).padStart(2, "0")}`;
@@ -73,17 +73,17 @@ export function buildSettingsContent(s) {
   const consumerGroups   = s.groups.filter((g) => (g.applicationType || "") === "Consumer");
   const intermediaGroups = s.groups.filter((g) => (g.applicationType || "") === "Intermedia");
   console.log(
-    `📦 Group breakdown — Producer: ${producerGroups.length}, Consumer: ${consumerGroups.length}, Intermedia: ${intermediaGroups.length}`,
+    `Group breakdown — Producer: ${producerGroups.length}, Consumer: ${consumerGroups.length}, Intermedia: ${intermediaGroups.length}`,
   );
   const noType = s.groups.filter((g) => !g.applicationType);
   if (noType.length)
-    console.warn("⚠️ Groups with no applicationType (will be skipped):", noType);
+    console.warn("Groups with no applicationType (will be skipped):", noType);
  
   // Per-group - Producers
   s.groups.forEach((g, i) => {
     if ((g.applicationType || "") !== "Producer") return;
     const n = i + 1;
-    console.log(`  ✅ Producer → Group${n}`, g);
+    console.log(`Producer → Group${n}`, g);
     out += `Group${n}.nrofApplications = 1\n`;
     out += `Group${n}.application1 = Producer\n`;
     out += `Group${n}.nrofHosts = ${g.numHosts}\n`;
