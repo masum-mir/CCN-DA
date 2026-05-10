@@ -161,7 +161,7 @@ class SmartFileParser:
         Returns: {report_type, router, value, grouping_type}
         """
         # Remove extension and _average suffix
-        name = filename.replace('_average.txt', '').replace('_average', '')
+        name = filename.replace('.txt', '').replace('_average', '')
         parts = name.split(self.config['filename_structure']['delimiter'])
         
         # Debug info for first few files

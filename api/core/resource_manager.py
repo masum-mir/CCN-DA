@@ -26,11 +26,11 @@ class ResourceConfig:
     """Configuration for resource management parameters."""
     
     # Default values - optimized for maximum performance
-    ETA = 0.85              # eta: RAM utilization threshold (85% for safety margin)
+    ETA = 0.50              # eta: RAM utilization threshold (85% for safety margin)
     GAMMA = 2.5             # gamma: DataFrame expansion factor (reduced for more workers)
-    M_OVERHEAD_MB = 30      # Per-worker overhead in MB (reduced for more workers)
-    MIN_WORKERS = 2         # Minimum worker count (at least 2 for parallelism)
-    MAX_WORKERS = 64        # Maximum worker count (hard cap, allows full CPU usage)
+    M_OVERHEAD_MB = 50      # Per-worker overhead in MB (reduced for more workers)
+    MIN_WORKERS = 1         # Minimum worker count (at least 2 for parallelism)
+    MAX_WORKERS = 2        # Maximum worker count (hard cap, allows full CPU usage)
     
     # Use all available CPU cores when psutil unavailable
     import os as _os

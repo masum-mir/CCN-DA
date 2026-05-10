@@ -13,7 +13,7 @@ export function calcBatch(s) {
 // buildSettingsContent
 export function buildSettingsContent(s) {
   console.log("State snapshot:", s);
-  let name = s.scenarioName || "CCN_routing";
+  let name = s.scenarioName || "TEST";
   if (s.nameAddDateTime) {
     const d = new Date();
     name += `_${d.getFullYear()}_${String(d.getMonth() + 1).padStart(2, "0")}_${String(d.getDate()).padStart(2, "0")}`;

@@ -55,21 +55,21 @@ export const terminate = () =>
   json(`${API}/terminate`, {}).then((r) => r.json());
 
 // WKT 
-export const testCity = (cityName) =>
-  json(`${API}/wkt/test_city`, { city_name: cityName }).then((r) => r.json());
+// export const testCity = (cityName) =>
+//   json(`${API}/wkt/test_city`, { city_name: cityName }).then((r) => r.json());
 
 // Configs
-export const listConfigs = () => fetch(`${API}/configs`).then((r) => r.json());
+// export const listConfigs = () => fetch(`${API}/configs`).then((r) => r.json());
 
-export const getConfig = (fn) =>
-  fetch(`${API}/configs/${fn}`).then((r) => r.json());
+// export const getConfig = (fn) =>
+//   fetch(`${API}/configs/${fn}`).then((r) => r.json());
 
-export const saveAll = (settings) =>
-  json(`${API}/save-all`, { settings }).then((r) => r.json());
+// export const saveAll = (settings) =>
+//   json(`${API}/save-all`, { settings }).then((r) => r.json());
 
 // Post-processing 
-export const parseToCSV = (body) =>
-  json(`${API}/parse-to-csv`, body).then((r) => r.json());
+// export const parseToCSV = (body) =>
+//   json(`${API}/parse-to-csv`, body).then((r) => r.json());
 
 export const runAverager = (body) =>
   json(`${API}/run-averager`, body).then((r) => r.json());

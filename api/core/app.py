@@ -406,9 +406,10 @@ REPORTS_DIR   = SIMULATOR_DIR / "reports"
 CONFIGS_DIR   = SIMULATOR_DIR / "user_configs"
 CONFIGS_DIR.mkdir(parents=True, exist_ok=True)
 
-_API_DIR          = Path(__file__).parent
-BATCH_CFG_PATH    = _API_DIR / "batch_config.json"
-ANALYSIS_CFG_PATH = _API_DIR / "analysis_config.json"
+_API_DIR          = Path(__file__).parent.parent
+CONFIG_DIR = _API_DIR / "config"
+BATCH_CFG_PATH    = CONFIG_DIR / "averager_config.json"
+ANALYSIS_CFG_PATH = CONFIG_DIR / "analysis_config.json"
 
 _processes: dict = {}
 _lock = threading.Lock()
@@ -901,6 +902,8 @@ if __name__ == "__main__":
     print(f"  ONE Simulator Flask API  —  Averager + Analysis Pipeline")
     print(f"{'='*65}")
     print(f"  Simulator dir   : {SIMULATOR_DIR}")
+    print(f"  BATCH_CFG_PATH dir   : {BATCH_CFG_PATH}")
+    print(f"  REPORTS_DIR dir   : {REPORTS_DIR}")
     print(f"  batch_config    : {'✓' if BATCH_CFG_PATH.exists() else '✗ MISSING (using defaults)'}")
     print(f"  analysis_config : {'✓' if ANALYSIS_CFG_PATH.exists() else '✗ MISSING (using defaults)'}")
     print()

@@ -9,7 +9,7 @@ export function useSimulation(s, upd, addLog, setTab) {
   const buildBody = useCallback(
     () => ({
       content: buildSettingsContent(s),
-      settings_filename: (s.scenarioName || "CCN_routing") + "_settings.txt",
+      settings_filename: (s.scenarioName || "TEST") + "_settings.txt",
       batch_count: calcBatch(s).total,
       compile: s.compileFirst,
       batchFolder: s.batchFolder || "reports/",

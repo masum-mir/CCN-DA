@@ -27,17 +27,18 @@
       "positions": {
         "buffer": 4,
         "prefix": 0,
-        "report_type": 5,
+        "report_type": 6,
         "router": 1,
         "seed": 2,
-        "ttl": 3
+        "ttl": 3,
+        "distribution":5
       }
     }
   },
   "grouping_labels": {
     "buffer": "Buffer Size (MB)",
     "default": "Parameter Value",
-    "distro": "Query Distribution",
+    "distribution": "Query Distribution",
     "timeout": "Timeout (seconds)",
     "ttl": "TTL (seconds)"
   },
@@ -147,6 +148,6 @@
     "min_values_for_surface": 3
   },
   "report_extension": ".txt",
-  "report_types": ["MessageStatsReport"],
+  "report_types": ["MessageStatsReport", "CCN_application_reporter"],
   "test_field": "test_value"
 }

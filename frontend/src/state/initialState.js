@@ -2,7 +2,7 @@ import { DEFAULT_GROUPS, DEFAULT_INTERFACES } from "./defaults.js";
 
 export function initState() {
   return {
-    scenarioName: "CCN_routing",
+    scenarioName: "TEST",
     nameAddDateTime: false,
     simulateConnections: true,
     updateInterval: 0.1,
