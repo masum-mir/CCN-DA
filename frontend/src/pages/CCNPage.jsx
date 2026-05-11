@@ -6,32 +6,32 @@ export default function CCNPage({ s, upd, updn }) {
       <div className="page-title">03 · CCN Application Settings</div>
 
       <fieldset>
-        <legend>Producer</legend>
+        <legend>Source</legend>
         <FR>
           <FG label="Cache Capacity">
             <input
               type="number"
-              value={s.producer.cacheCapacity}
+              value={s.Source.cacheCapacity}
               onChange={(e) =>
-                updn("producer", "cacheCapacity", e.target.value)
+                updn("Source", "cacheCapacity", e.target.value)
               }
             />
           </FG>
           <FG label="Mode">
             <input
               type="number"
-              value={s.producer.mode}
+              value={s.Source.mode}
               min="1"
               max="3"
-              onChange={(e) => updn("producer", "mode", e.target.value)}
+              onChange={(e) => updn("Source", "mode", e.target.value)}
             />
           </FG>
           <FG label="Max Carried Content">
             <input
               type="number"
-              value={s.producer.maxCarriedContent}
+              value={s.Source.maxCarriedContent}
               onChange={(e) =>
-                updn("producer", "maxCarriedContent", e.target.value)
+                updn("Source", "maxCarriedContent", e.target.value)
               }
             />
           </FG>
@@ -40,25 +40,25 @@ export default function CCNPage({ s, upd, updn }) {
           <FG label="Ava Cache (min,max)">
             <input
               type="text"
-              value={s.producer.avaCache}
-              onChange={(e) => updn("producer", "avaCache", e.target.value)}
+              value={s.Source.avaCache}
+              onChange={(e) => updn("Source", "avaCache", e.target.value)}
             />
           </FG>
           <FG label="Static Cache Capacity">
             <input
               type="number"
-              value={s.producer.staticCacheCapacity}
+              value={s.Source.staticCacheCapacity}
               onChange={(e) =>
-                updn("producer", "staticCacheCapacity", e.target.value)
+                updn("Source", "staticCacheCapacity", e.target.value)
               }
             />
           </FG>
           <FG label="Static Cache Range">
             <input
               type="text"
-              value={s.producer.staticCacheRange}
+              value={s.Source.staticCacheRange}
               onChange={(e) =>
-                updn("producer", "staticCacheRange", e.target.value)
+                updn("Source", "staticCacheRange", e.target.value)
               }
             />
           </FG>
@@ -67,17 +67,17 @@ export default function CCNPage({ s, upd, updn }) {
           <FG label="Seed Static Cache">
             <input
               type="number"
-              value={s.producer.seedStaticCache}
+              value={s.Source.seedStaticCache}
               onChange={(e) =>
-                updn("producer", "seedStaticCache", e.target.value)
+                updn("Source", "seedStaticCache", e.target.value)
               }
             />
           </FG>
           <div className="form-group" style={{ justifyContent: "flex-end" }}>
             <Chk
               id="prodPIT"
-              checked={s.producer.enablePIT}
-              onChange={(v) => updn("producer", "enablePIT", v)}
+              checked={s.Source.enablePIT}
+              onChange={(v) => updn("Source", "enablePIT", v)}
               label="Enable PIT"
             />
           </div>
@@ -85,31 +85,31 @@ export default function CCNPage({ s, upd, updn }) {
       </fieldset>
 
       <fieldset>
-        <legend>Consumer</legend>
+        <legend>Sink</legend>
         <FR>
           <FG label="Cache Capacity">
             <input
               type="number"
-              value={s.consumer.cacheCapacity}
+              value={s.Sink.cacheCapacity}
               onChange={(e) =>
-                updn("consumer", "cacheCapacity", e.target.value)
+                updn("Sink", "cacheCapacity", e.target.value)
               }
             />
           </FG>
           <FG label="Mode">
             <input
               type="number"
-              value={s.consumer.mode}
+              value={s.Sink.mode}
               min="1"
               max="3"
-              onChange={(e) => updn("consumer", "mode", e.target.value)}
+              onChange={(e) => updn("Sink", "mode", e.target.value)}
             />
           </FG>
           <FG label="Seed Query">
             <input
               type="number"
-              value={s.consumer.seedQuery}
-              onChange={(e) => updn("consumer", "seedQuery", e.target.value)}
+              value={s.Sink.seedQuery}
+              onChange={(e) => updn("Sink", "seedQuery", e.target.value)}
             />
           </FG>
         </FR>
@@ -117,23 +117,23 @@ export default function CCNPage({ s, upd, updn }) {
           <FG label="Interest Size (bytes)">
             <input
               type="number"
-              value={s.consumer.interestSize}
-              onChange={(e) => updn("consumer", "interestSize", e.target.value)}
+              value={s.Sink.interestSize}
+              onChange={(e) => updn("Sink", "interestSize", e.target.value)}
             />
           </FG>
           <FG label="Interval (s)">
             <input
               type="number"
-              value={s.consumer.interval}
-              onChange={(e) => updn("consumer", "interval", e.target.value)}
+              value={s.Sink.interval}
+              onChange={(e) => updn("Sink", "interval", e.target.value)}
             />
           </FG>
           <FG label="Msgs to Generate">
             <input
               type="number"
-              value={s.consumer.numOfMsgToGenerate}
+              value={s.Sink.numOfMsgToGenerate}
               onChange={(e) =>
-                updn("consumer", "numOfMsgToGenerate", e.target.value)
+                updn("Sink", "numOfMsgToGenerate", e.target.value)
               }
             />
           </FG>
@@ -142,61 +142,61 @@ export default function CCNPage({ s, upd, updn }) {
           <FG label="Query Range (min,max)">
             <input
               type="text"
-              value={s.consumer.queryRange}
-              onChange={(e) => updn("consumer", "queryRange", e.target.value)}
+              value={s.Sink.queryRange}
+              onChange={(e) => updn("Sink", "queryRange", e.target.value)}
             />
           </FG>
           <FG label="Query Distribution">
             <input
               type="number"
-              value={s.consumer.queryDistribution}
+              value={s.Sink.queryDistribution}
               onChange={(e) =>
-                updn("consumer", "queryDistribution", e.target.value)
+                updn("Sink", "queryDistribution", e.target.value)
               }
             />
           </FG>
           <FG label="Ava Cache (min,max)">
             <input
               type="text"
-              value={s.consumer.avaCache}
-              onChange={(e) => updn("consumer", "avaCache", e.target.value)}
+              value={s.Sink.avaCache}
+              onChange={(e) => updn("Sink", "avaCache", e.target.value)}
             />
           </FG>
         </FR>
         <Chk
           id="consPIT"
-          checked={s.consumer.enablePIT}
-          onChange={(v) => updn("consumer", "enablePIT", v)}
+          checked={s.Sink.enablePIT}
+          onChange={(v) => updn("Sink", "enablePIT", v)}
           label="Enable PIT"
         />
       </fieldset>
 
       <fieldset>
-        <legend>Intermedia (Relay)</legend>
+        <legend>Seeder (Relay)</legend>
         <FR>
           <FG label="Cache Capacity">
             <input
               type="number"
-              value={s.intermedia.cacheCapacity}
+              value={s.Seeder.cacheCapacity}
               onChange={(e) =>
-                updn("intermedia", "cacheCapacity", e.target.value)
+                updn("Seeder", "cacheCapacity", e.target.value)
               }
             />
           </FG>
           <FG label="Mode">
             <input
               type="number"
-              value={s.intermedia.mode}
+              value={s.Seeder.mode}
               min="1"
               max="3"
-              onChange={(e) => updn("intermedia", "mode", e.target.value)}
+              onChange={(e) => updn("Seeder", "mode", e.target.value)}
             />
           </FG>
           <FG label="Ava Cache (min,max)">
             <input
               type="text"
-              value={s.intermedia.avaCache}
-              onChange={(e) => updn("intermedia", "avaCache", e.target.value)}
+              value={s.Seeder.avaCache}
+              onChange={(e) => updn("Seeder", "avaCache", e.target.value)}
             />
           </FG>
         </FR>
@@ -204,17 +204,17 @@ export default function CCNPage({ s, upd, updn }) {
           <FG label="Max Carried Content">
             <input
               type="number"
-              value={s.intermedia.maxCarriedContent}
+              value={s.Seeder.maxCarriedContent}
               onChange={(e) =>
-                updn("intermedia", "maxCarriedContent", e.target.value)
+                updn("Seeder", "maxCarriedContent", e.target.value)
               }
             />
           </FG>
           <div className="form-group" style={{ justifyContent: "flex-end" }}>
             <Chk
               id="interPIT"
-              checked={s.intermedia.enablePIT}
-              onChange={(v) => updn("intermedia", "enablePIT", v)}
+              checked={s.Seeder.enablePIT}
+              onChange={(v) => updn("Seeder", "enablePIT", v)}
               label="Enable PIT"
             />
           </div>

@@ -19,7 +19,7 @@ export function buildSettingsContent(s) {
     name += `_${d.getFullYear()}_${String(d.getMonth() + 1).padStart(2, "0")}_${String(d.getDate()).padStart(2, "0")}`;
   }
 
-  const tmpl = `${name}_%%Group.router%%_%%MovementModel.rngSeed%%_%%Group.msgTtl%%_%%Group.bufferSize%%_%%Consumer.queryDistribution%%`;
+  const tmpl = `${name}_%%Group.router%%_%%MovementModel.rngSeed%%_%%Group.msgTtl%%_%%Group.bufferSize%%_%%Sink.queryDistribution%%`;
 
   let out = `## Scenario settings\n`;
   out += `Scenario.name = ${tmpl}\n`;
@@ -57,35 +57,35 @@ export function buildSettingsContent(s) {
   out += `Group.speed = ${s.commonGroup.speed}\n`;
   out += `Group.msgTtl = ${ttl}\n\n`; 
  
-  // Producer Application  
-  out += `## Producer Application\n`;
-  out += `Producer.type = CCN_application\n`;
-  out += `Producer.cacheCapacity = ${s.producer.cacheCapacity}\n`;
-  out += `Producer.mode = ${s.producer.mode}\n`;
-  out += `Producer.avaCache = ${s.producer.avaCache}\n`;
-  out += `Producer.maxCarriedContent = ${s.producer.maxCarriedContent}\n`;
-  out += `Producer.staticCacheCapacity = ${s.producer.staticCacheCapacity}\n`;
-  out += `Producer.staticCacheRange = ${s.producer.staticCacheRange}\n`;
-  out += `Producer.seedStaticCache = ${s.producer.seedStaticCache}\n`;
-  out += `Producer.enablePIT = ${s.producer.enablePIT}\n\n`;
+  // Source Application  
+  out += `## Source Application\n`;
+  out += `Source.type = CCN_application\n`;
+  out += `Source.cacheCapacity = ${s.Source.cacheCapacity}\n`;
+  out += `Source.mode = ${s.Source.mode}\n`;
+  out += `Source.avaCache = ${s.Source.avaCache}\n`;
+  out += `Source.maxCarriedContent = ${s.Source.maxCarriedContent}\n`;
+  out += `Source.staticCacheCapacity = ${s.Source.staticCacheCapacity}\n`;
+  out += `Source.staticCacheRange = ${s.Source.staticCacheRange}\n`;
+  out += `Source.seedStaticCache = ${s.Source.seedStaticCache}\n`;
+  out += `Source.enablePIT = ${s.Source.enablePIT}\n\n`;
  
-  const producerGroups   = s.groups.filter((g) => (g.applicationType || "") === "Producer");
-  const consumerGroups   = s.groups.filter((g) => (g.applicationType || "") === "Consumer");
-  const intermediaGroups = s.groups.filter((g) => (g.applicationType || "") === "Intermedia");
+  const SourceGroups   = s.groups.filter((g) => (g.applicationType || "") === "Source");
+  const SinkGroups   = s.groups.filter((g) => (g.applicationType || "") === "Sink");
+  const SeederGroups = s.groups.filter((g) => (g.applicationType || "") === "Seeder");
   console.log(
-    `Group breakdown — Producer: ${producerGroups.length}, Consumer: ${consumerGroups.length}, Intermedia: ${intermediaGroups.length}`,
+    `Group breakdown — Source: ${SourceGroups.length}, Sink: ${SinkGroups.length}, Seeder: ${SeederGroups.length}`,
   );
   const noType = s.groups.filter((g) => !g.applicationType);
   if (noType.length)
     console.warn("Groups with no applicationType (will be skipped):", noType);
  
-  // Per-group - Producers
+  // Per-group - Sources
   s.groups.forEach((g, i) => {
-    if ((g.applicationType || "") !== "Producer") return;
+    if ((g.applicationType || "") !== "Source") return;
     const n = i + 1;
-    console.log(`Producer → Group${n}`, g);
+    console.log(`Source → Group${n}`, g);
     out += `Group${n}.nrofApplications = 1\n`;
-    out += `Group${n}.application1 = Producer\n`;
+    out += `Group${n}.application1 = Source\n`;
     out += `Group${n}.nrofHosts = ${g.numHosts}\n`;
     out += `Group${n}.movementModel = ${g.movementModel}\n`;
     if (g.nodeLocation) out += `Group${n}.nodeLocation = ${g.nodeLocation}\n`;
@@ -97,26 +97,26 @@ export function buildSettingsContent(s) {
     out += "\n";
   });
  
-  // Consumer Application
-  out += `## Consumer Application\n`;
-  out += `Consumer.type = CCN_application\n`;
-  out += `Consumer.mode = ${s.consumer.mode}\n`;
-  out += `Consumer.cacheCapacity = ${s.consumer.cacheCapacity}\n`;
-  out += `Consumer.seedQuery = ${s.consumer.seedQuery}\n`;
-  out += `Consumer.interestSize = ${s.consumer.interestSize}\n`;
-  out += `Consumer.interval = ${s.consumer.interval}\n`;
-  out += `Consumer.numOfMsgToGenerate = ${s.consumer.numOfMsgToGenerate}\n`;
-  out += `Consumer.queryRange = ${s.consumer.queryRange}\n`;
-  out += `Consumer.queryDistribution = ${s.consumer.queryDistribution}\n`;
-  out += `Consumer.avaCache = ${s.consumer.avaCache}\n`;
-  out += `Consumer.maxCarriedContent = ${s.consumer.maxCarriedContent}\n`;
-  out += `Consumer.enablePIT = ${s.consumer.enablePIT}\n\n`;
+  // Sink Application
+  out += `## Sink Application\n`;
+  out += `Sink.type = CCN_application\n`;
+  out += `Sink.mode = ${s.Sink.mode}\n`;
+  out += `Sink.cacheCapacity = ${s.Sink.cacheCapacity}\n`;
+  out += `Sink.seedQuery = ${s.Sink.seedQuery}\n`;
+  out += `Sink.interestSize = ${s.Sink.interestSize}\n`;
+  out += `Sink.interval = ${s.Sink.interval}\n`;
+  out += `Sink.numOfMsgToGenerate = ${s.Sink.numOfMsgToGenerate}\n`;
+  out += `Sink.queryRange = ${s.Sink.queryRange}\n`;
+  out += `Sink.queryDistribution = ${s.Sink.queryDistribution}\n`;
+  out += `Sink.avaCache = ${s.Sink.avaCache}\n`;
+  out += `Sink.maxCarriedContent = ${s.Sink.maxCarriedContent}\n`;
+  out += `Sink.enablePIT = ${s.Sink.enablePIT}\n\n`;
  
   s.groups.forEach((g, i) => {
-    if ((g.applicationType || "") !== "Consumer") return;
+    if ((g.applicationType || "") !== "Sink") return;
     const n = i + 1; 
     out += `Group${n}.nrofApplications = 1\n`;
-    out += `Group${n}.application1 = Consumer\n`;
+    out += `Group${n}.application1 = Sink\n`;
     out += `Group${n}.nrofHosts = ${g.numHosts}\n`;
     out += `Group${n}.groupID = ${g.groupID}\n`;
     out += `Group${n}.nrofInterfaces = 1\n`;
@@ -124,20 +124,20 @@ export function buildSettingsContent(s) {
     out += "\n";
   });
  
-  // Intermediate relay nodes 
-  out += `## Intermediate relay nodes\n`;
-  out += `Intermedia.type = CCN_application\n`;
-  out += `Intermedia.cacheCapacity = ${s.intermedia.cacheCapacity}\n`;
-  out += `Intermedia.mode = ${s.intermedia.mode}\n`;
-  out += `Intermedia.avaCache = ${s.intermedia.avaCache}\n`;
-  out += `Intermedia.maxCarriedContent = ${s.intermedia.maxCarriedContent}\n`;
-  out += `Intermedia.enablePIT = ${s.intermedia.enablePIT}\n\n`;
+  // Seederte relay nodes 
+  out += `## Seederte relay nodes\n`;
+  out += `Seeder.type = CCN_application\n`;
+  out += `Seeder.cacheCapacity = ${s.Seeder.cacheCapacity}\n`;
+  out += `Seeder.mode = ${s.Seeder.mode}\n`;
+  out += `Seeder.avaCache = ${s.Seeder.avaCache}\n`;
+  out += `Seeder.maxCarriedContent = ${s.Seeder.maxCarriedContent}\n`;
+  out += `Seeder.enablePIT = ${s.Seeder.enablePIT}\n\n`;
  
   s.groups.forEach((g, i) => {
-    if ((g.applicationType || "") !== "Intermedia") return;
+    if ((g.applicationType || "") !== "Seeder") return;
     const n = i + 1; 
     out += `Group${n}.nrofApplications = 1\n`;
-    out += `Group${n}.application1 = Intermedia\n`;
+    out += `Group${n}.application1 = Seeder\n`;
     out += `Group${n}.nrofHosts = ${g.numHosts}\n`;
     out += `Group${n}.groupID = ${g.groupID}\n`;
     out += `Group${n}.movementModel = ${g.movementModel}\n`;

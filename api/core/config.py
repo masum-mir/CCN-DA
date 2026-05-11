@@ -37,14 +37,14 @@ DEFAULT_BATCH_CFG: dict = {
             "output_template": "{report_type}_{router}_{buffer}_buffer_average.txt",
         },
     ],
-    "report_types": ["MessageStatsReport", "CCN_application_reporter"],
+    "report_types": ["MessageStatsReport", "CCNApplicationReporter"],
 }
 
 DEFAULT_ANALYSIS_CFG: dict = {
     "data_separator": ":",
     "directories":    {"report_dir": "reports/", "plots_dir": "plots/"},
     "file_patterns":  {"report_extension": ".txt"},
-    "report_types":   ["MessageStatsReport", "CCN_application_reporter"],
+    "report_types":   ["MessageStatsReport", "CCNApplicationReporter"],
     "enabled_plots":  {
         "line_plots":   True,
         "violin_plots": True,
@@ -60,15 +60,26 @@ DEFAULT_ANALYSIS_CFG: dict = {
     },
     "metrics": {
         "include": [
-            "delivery_prob", "overhead_ratio", "latency_avg", "latency_med",
-            "hopcount_avg", "hopcount_med", "buffertime_avg", "buffertime_med",
-            "created", "started", "relayed", "dropped",
-            "query_count", "response_count", "interest_satisfaction_rate",
-            "static_cache_hit", "static_cache_miss",
-            "oppo_cache_hit", "oppo_cache_miss",
-            "drop_pit", "drop_nonce", "drop_list",
-            "duplicated_query", "average_interval",
-            "retrieval_latency_reduction", "caching_gain_index",
+            "delivery_prob",
+            "overhead_ratio",
+            "latency_avg",
+            "hopcount_avg",
+            "buffertime_avg",
+            "oppo_cache_hit",
+            "oppo_cache_miss",
+            "drop_list",
+            "drop_pit",
+            "drop_nonce",
+            "query_count",
+            "duplicated_query",
+            "static_cache_hit",
+            "static_cache_miss",
+            "response_count",
+            "average_interval",
+            "caching_gain_index",
+            "retrieval_latency_reduction",
+            "interest_satisfaction_rate",
+            "dissemination_efficiency"
         ],
         "ignore": [],
     },
@@ -184,7 +195,7 @@ def one_command(cfg_rel: str, batch: bool, n: int, SIMULATOR_DIR: Path) -> list:
 def build_config_lines(config: dict) -> str:
     sections = {
         "Scenario": [], "Interface": [], "Group": [], "MovementModel": [],
-        "MapBasedMovement": [], "Producer": [], "Consumer": [], "Intermedia": [],
+        "MapBasedMovement": [], "Source": [], "Sink": [], "Seeder": [],
         "Report": [], "Events": [], "Optimization": [], "GUI": [], "Other": [],
     }
     order = list(sections.keys())

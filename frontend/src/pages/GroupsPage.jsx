@@ -18,27 +18,27 @@ const ROUTER_OPTIONS = [
   "FirstContactRouter",
 ];
 
-const APPLICATION_TYPES = ["Producer", "Consumer", "Intermedia"];
+const APPLICATION_TYPES = ["Source", "Sink", "Seeder"];
 
 const INTERFACE_OPTIONS = ["btInterface", "highspeedInterface"];
 
 // Per-application type defaults
 const APP_DEFAULTS = {
-  Producer: {
+  Source: {
     movementModel: "StationaryMovement",
     interface1: "highspeedInterface",
     bufferSize: "1G",
     speed: "0,0",
     nodeLocation: "",
   },
-  Consumer: {
+  Sink: {
     movementModel: "ShortestPathMapBasedMovement",
     interface1: "btInterface",
     bufferSize: "",
     speed: "",
     nodeLocation: "",
   },
-  Intermedia: {
+  Seeder: {
     movementModel: "ShortestPathMapBasedMovement",
     interface1: "btInterface",
     bufferSize: "50M",
@@ -50,7 +50,7 @@ const APP_DEFAULTS = {
 export default function GroupsPage({ s, upd, updn }) {
   console.log("group data: ", s);
   const ng = s.newGroup;
-  const appType = ng.applicationType || "Producer";
+  const appType = ng.applicationType || "Source";
 
   // When application type changes, apply sensible defaults
   const handleAppTypeChange = (val) => {
@@ -90,8 +90,8 @@ export default function GroupsPage({ s, upd, updn }) {
     ]);
   };
 
-  const isProducer = appType === "Producer";
-  const isIntermedia = appType === "Intermedia";
+  const isSource = appType === "Source";
+  const isSeeder = appType === "Seeder";
   const isMapRoute = ng.movementModel === "MapRouteMovement";
   const isStationary = ng.movementModel === "StationaryMovement";
 
@@ -198,9 +198,9 @@ export default function GroupsPage({ s, upd, updn }) {
               value={ng.groupID}
               onChange={(e) => updn("newGroup", "groupID", e.target.value)}
               placeholder={
-                isProducer
+                isSource
                   ? "e.g. S"
-                  : appType === "Consumer"
+                  : appType === "Sink"
                     ? "e.g. p"
                     : "e.g. c"
               }
@@ -262,8 +262,8 @@ export default function GroupsPage({ s, upd, updn }) {
             </>
           )}
 
-          {/* Node location – Producer (Stationary) */}
-          {isProducer && isStationary && (
+          {/* Node location – Source (Stationary) */}
+          {isSource && isStationary && (
             <FG label="Node Location (x, y)">
               <input
                 type="text"
@@ -294,20 +294,20 @@ export default function GroupsPage({ s, upd, updn }) {
             </select>
           </FG>
 
-          {/* Buffer size – Producer always 1G, Consumer hidden, Intermedia 50M */}
-          {(isProducer || isIntermedia) && (
+          {/* Buffer size – Source always 1G, Sink hidden, Seeder 50M */}
+          {(isSource || isSeeder) && (
             <FG label="Buffer Size">
               <input
                 type="text"
                 value={ng.bufferSize}
                 onChange={(e) => updn("newGroup", "bufferSize", e.target.value)}
-                placeholder={isProducer ? "1G" : "50M"}
+                placeholder={isSource ? "1G" : "50M"}
               />
             </FG>
           )}
 
-          {/* Speed – hidden for Stationary Producer */}
-          {!(isProducer && isStationary) && (
+          {/* Speed – hidden for Stationary Source */}
+          {!(isSource && isStationary) && (
             <FG label="Speed (min, max)">
               <input
                 type="text"
@@ -318,8 +318,8 @@ export default function GroupsPage({ s, upd, updn }) {
             </FG>
           )}
 
-          {/* Wait time – Intermedia only */}
-          {isIntermedia && (
+          {/* Wait time – Seeder only */}
+          {isSeeder && (
             <FG label="Wait Time (min, max)">
               <input
                 type="text"
@@ -330,8 +330,8 @@ export default function GroupsPage({ s, upd, updn }) {
             </FG>
           )}
 
-          {/* okMaps – Intermedia bus/car groups */}
-          {isIntermedia && (
+          {/* okMaps – Seeder bus/car groups */}
+          {isSeeder && (
             <FG label="okMaps (optional)">
               <input
                 type="text"
@@ -372,11 +372,11 @@ export default function GroupsPage({ s, upd, updn }) {
           {s.groups.map((g, i) => {
             // Badge colour per app type
             const badgeColor =
-              g.applicationType === "Producer"
+              g.applicationType === "Source"
                 ? "var(--accent-green, #22c55e)"
-                : g.applicationType === "Consumer"
+                : g.applicationType === "Sink"
                   ? "var(--accent-blue,  #3b82f6)"
-                  : g.applicationType === "Intermedia"
+                  : g.applicationType === "Seeder"
                     ? "var(--accent-amber, #f59e0b)"
                     : "var(--tx-3)";
 

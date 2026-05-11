@@ -6,7 +6,7 @@ REPORT_METRICS: dict = {
         "hopcount_avg", "hopcount_med",
         "buffertime_avg", "buffertime_med",
     ],
-    "CCN_application_reporter": [
+    "CCNApplicationReporter": [
         "query_count", "response_count", "interest_satisfaction_rate",
         "static_cache_hit", "static_cache_miss",
         "oppo_cache_hit", "oppo_cache_miss",

@@ -149,7 +149,7 @@ class SmartFileParser:
     def get_report_type(self, filename):
         """Extract report type from filename"""
         # Try to identify report type from filename
-        for report_type in self.config.get('report_types', ['MessageStatsReport', 'CCN_application_reporter']):
+        for report_type in self.config.get('report_types', ['MessageStatsReport', 'CCNApplicationReporter']):
             if report_type in filename:
                 return report_type
         return 'Unknown'
@@ -725,8 +725,13 @@ class PlotGenerator:
                 return False
             
             fig, ax = plt.subplots(figsize=((len(metrics)*2.5)+2, len(metrics)*2.5))
-            corr = router_df[metrics].corr()
-            
+            # corr = router_df[metrics].corr()
+            available_metrics = [m for m in metrics if m in router_df.columns]
+            if len(available_metrics) < 2:
+                print(f"  [SKIP] Heatmap {router}: not enough metric columns")
+                return False
+            corr = router_df[available_metrics].corr()
+
             im = sns.heatmap(corr, annot=True, cmap=settings['style']['cmap'],
                        vmin=settings['style']['vmin'], vmax=settings['style']['vmax'],
                        annot_kws={"size": settings['font_sizes']['annotations']},

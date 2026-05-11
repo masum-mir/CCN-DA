@@ -6,7 +6,7 @@
   },
   "report_types": [
     "MessageStatsReport",
-    "CCN_application_reporter"
+    "CCNApplicationReporter"
   ],
   "filename_pattern": {
     "delimiter": "_",

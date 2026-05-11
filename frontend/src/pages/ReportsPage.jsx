@@ -1,7 +1,7 @@
 import { FG, FR } from "../components/ui/UI.jsx";
 
 const REPORT_CLASSES = [
-  "CCN_application_reporter",
+  "CCNApplicationReporter",
   "MessageStatsReport",
   "BufferOccupancyReport",
   "ConnectivityONEReport",

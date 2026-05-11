@@ -148,6 +148,6 @@
     "min_values_for_surface": 3
   },
   "report_extension": ".txt",
-  "report_types": ["MessageStatsReport", "CCN_application_reporter"],
+  "report_types": ["MessageStatsReport", "CCNApplicationReporter"],
   "test_field": "test_value"
 }

@@ -16,7 +16,7 @@ export function initState() {
       transmitRange: "",
     },
 
-    producer: {
+    Source: {
       cacheCapacity: 5000,
       mode: 2,
       avaCache: "1,1",
@@ -26,7 +26,7 @@ export function initState() {
       seedStaticCache: 36,
       enablePIT: true,
     },
-    consumer: {
+    Sink: {
       cacheCapacity: 5000,
       mode: 1,
       seedQuery: 12,
@@ -39,7 +39,7 @@ export function initState() {
       maxCarriedContent: 1,
       enablePIT: true,
     },
-    intermedia: {
+    Seeder: {
       cacheCapacity: 500,
       mode: 3,
       avaCache: "0,1",
@@ -75,14 +75,14 @@ export function initState() {
       waitTime: "",
       speed: "0,0",
       activeTimes: "0",
-      applicationType: "Producer",
+      applicationType: "Source",
       interface1: "highspeedInterface",
       nodeLocation: "",
       okMaps: "",
     },
 
-    reports: ["CCN_application_reporter", "MessageStatsReport"],
-    reportClass: "CCN_application_reporter",
+    reports: ["CCNApplicationReporter", "MessageStatsReport"],
+    reportClass: "CCNApplicationReporter",
     reportWarmup: 0,
     reportDir: "reports/",
 
@@ -146,7 +146,7 @@ export function initState() {
   };
 }
 
-// ─ONE config file parser ───
+// ONE config file parser
 
 export function parseONEConfig(text) {
   const cfg = {};
@@ -223,7 +223,7 @@ export function applyParsedConfig(cfg, setS) {
     setb(cr, "binaryMode", "CCNRouter.binaryMode");
     s.ccnRouter = cr;
 
-    const prod = { ...s.producer };
+    const prod = { ...s.Source };
     [
       "cacheCapacity",
       "mode",
@@ -232,11 +232,11 @@ export function applyParsedConfig(cfg, setS) {
       "staticCacheCapacity",
       "staticCacheRange",
       "seedStaticCache",
-    ].forEach((f) => setf(prod, f, `Producer.${f}`));
-    setb(prod, "enablePIT", "Producer.enablePIT");
-    s.producer = prod;
+    ].forEach((f) => setf(prod, f, `Source.${f}`));
+    setb(prod, "enablePIT", "Source.enablePIT");
+    s.Source = prod;
 
-    const cons = { ...s.consumer };
+    const cons = { ...s.Sink };
     [
       "cacheCapacity",
       "mode",
@@ -248,16 +248,16 @@ export function applyParsedConfig(cfg, setS) {
       "queryDistribution",
       "avaCache",
       "maxCarriedContent",
-    ].forEach((f) => setf(cons, f, `Consumer.${f}`));
-    setb(cons, "enablePIT", "Consumer.enablePIT");
-    s.consumer = cons;
+    ].forEach((f) => setf(cons, f, `Sink.${f}`));
+    setb(cons, "enablePIT", "Sink.enablePIT");
+    s.Sink = cons;
 
-    const inter = { ...s.intermedia };
+    const inter = { ...s.Seeder };
     ["cacheCapacity", "mode", "avaCache", "maxCarriedContent"].forEach((f) =>
-      setf(inter, f, `Intermedia.${f}`),
+      setf(inter, f, `Seeder.${f}`),
     );
-    setb(inter, "enablePIT", "Intermedia.enablePIT");
-    s.intermedia = inter;
+    setb(inter, "enablePIT", "Seeder.enablePIT");
+    s.Seeder = inter;
 
     const opt = { ...s.optimization };
     setf(opt, "cellSizeMult", "Optimization.cellSizeMult");
