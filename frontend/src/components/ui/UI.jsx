@@ -124,7 +124,7 @@ export function ConsolePanel({ logs, onClear, onCopy }) {
           </div>
         ) : (
           logs.map((l, i) => (
-            <div key={i} className={`log-line ${l.level}`}>
+            <div key={`${l.ts}-${i}`} className={`log-line ${l.level}`}>
               <span className="log-ts">{l.ts}</span>
               <span className="log-msg">{l.msg}</span>
             </div>

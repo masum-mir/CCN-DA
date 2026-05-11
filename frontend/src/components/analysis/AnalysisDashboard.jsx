@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import "../../styles/AnalysisDashboard.css";
-
-const API = import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+import { API } from "../../api/simulator.js";
  
 // Plot card
 function PlotCard({ path, name }) {

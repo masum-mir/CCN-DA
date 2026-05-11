@@ -30,12 +30,12 @@ const TABS = [
     icon: "fa-solid fa-map",
     num: "06",
   },
-  {
-    id: "PostProcessing",
-    label: "Post-Processing",
-    icon: "fa-solid fa-flask",
-    num: "07",
-  },
+  // {
+  //   id: "PostProcessing",
+  //   label: "Post-Processing",
+  //   icon: "fa-solid fa-flask",
+  //   num: "07",
+  // },
 ];
 
 export { TABS };

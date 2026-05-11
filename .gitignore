@@ -1,2 +1,12 @@
+
+__pycache__/
+*.py[cod]
+
+.venv/
+
+
+.vscode/
+.idea/
+
 simulator/
 prev/

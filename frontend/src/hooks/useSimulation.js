@@ -1,99 +1,130 @@
-// hooks/useSimulation.js
 import { useCallback } from "react";
-import { runPipeline, runAverager, runRegression } from "../api/simulator.js";
+import { generateReports, runAverager, runRegression, terminate } from "../api/simulator.js";
 import { buildSettingsContent, calcBatch } from "./useConfig.js";
-import { terminate } from "../api/simulator.js";
+
+function _buildSimBody(s) {
+  const content  = buildSettingsContent(s);
+  const filename = (s.scenarioName || "TEST") + "_settings.txt";
+  return {
+    content,
+    settings_filename: filename,
+    batch_count:       calcBatch(s).total,
+    compile:           s.compileFirst,
+    _filename:         filename,
+  };
+}
 
 export function useSimulation(s, upd, addLog, setTab) {
-  // Shared body builder
-  const buildBody = useCallback(
-    () => ({
-      content: buildSettingsContent(s),
-      settings_filename: (s.scenarioName || "TEST") + "_settings.txt",
-      batch_count: calcBatch(s).total,
-      compile: s.compileFirst,
-      batchFolder: s.batchFolder || "reports/",
-      analysisPlotsDir: s.analysisPlotsDir || "plots/",
-      batchDelimiter: s.batchDelimiter || "_",
-      batchExtension: s.batchExtension || ".txt",
-      batchPrecision: s.batchPrecision || 4,
-      analysisReportTypePos: s.analysisReportTypePos || 0,
-      analysisRouterPos: s.analysisRouterPos || 1,
-      analysisGroupingTypePos: s.analysisGroupingTypePos || -1,
-    }),
-    [s],
-  );
 
-  // Full pipeline
   const handleRun = useCallback(async () => {
-    upd("simStatus", "running");
-    upd("results", null);
-    upd("plotResults", null);
-    upd("simError", "");
-    upd("averaged", null);
-    upd("analysis", null);
-    upd("regression", null);
+    upd("simStatus",    "running");
+    upd("results",      null);
+    upd("plotResults",  null);
+    upd("simError",     "");
+    upd("averaged",     null);
+    upd("analysis",     null);
+    upd("regression",   null);
     upd("pipelineStep", 1);
-    addLog(
-      "Starting full pipeline (Simulation → Parse → Average → Plots)",
-      "step",
-    );
+
+    const body = _buildSimBody(s);
+    addLog(`Settings: ${body._filename}`, "info");
+    addLog("Starting pipeline…", "step");
 
     try {
-      await runPipeline(buildBody(), (ev) => {
-        if (ev.type === "step") {
-          addLog(+ ev.message, "step");
-          if (ev.step) upd("pipelineStep", ev.step);
-        } else if (ev.type === "log") {
-          addLog(ev.message, ev.level || "output");
-        } else if (ev.type === "pipeline_complete") {
-          if (ev.success) {
-            addLog(ev.message, "success");
-            upd("simStatus", "done");
-            upd("pipelineStep", 5);
-            if (ev.data) {
-              if (ev.data.raw_results) upd("results", ev.data.raw_results);
-              if (ev.data.plot_results)
-                upd("plotResults", ev.data.plot_results);
-              if (ev.data.averaged) upd("averaged", ev.data.averaged);
-              if (ev.data.analysis) upd("analysis", ev.data.analysis);
-              if (ev.data.regression) upd("regression", ev.data.regression);
-              if (ev.data.saved_plots) upd("savedPlots", ev.data.saved_plots);
-              if (ev.data.plots_base) upd("plotsDir", ev.data.plots_base);
-              if (ev.data.grand_saved)
-                addLog(
-                  `${ev.data.grand_saved.length} plot(s) saved`,
-                  "success",
-                );
-            }
-            setTimeout(() => setTab("DataAnalysis"), 800);
-          } else {
-            addLog(ev.message, "error");
-            upd("simStatus", "error");
-            upd("simError", ev.message);
-            upd("pipelineStep", null);
-          }
+      let simOk = false;
+      await generateReports(body, (ev) => {
+        if (ev.type === "log")           addLog(ev.message, ev.level || "output");
+        else if (ev.type === "complete") {
+          simOk = ev.success;
+          addLog(ev.message, ev.success ? "success" : "error");
         }
       });
+      if (!simOk) {
+        upd("simStatus",    "error");
+        upd("simError",     "Simulation failed — check console");
+        upd("pipelineStep", null);
+        return;
+      }
     } catch (err) {
       addLog(err.message, "error");
-      upd("simStatus", "error");
-      upd("simError", err.message);
+      upd("simStatus",    "error");
+      upd("simError",     err.message);
       upd("pipelineStep", null);
+      return;
     }
-  }, [s, upd, addLog, setTab, buildBody]);
 
-  // Averager only ────
-  const handleAverager = useCallback(async () => {
-    upd("simStatus", "averaging");
-    upd("simError", "");
-    upd("averaged", null);
+    upd("pipelineStep", 2);
     addLog("Running Averager…", "step");
+    try {
+      const avgRes = await runAverager();
+      if (avgRes.success) {
+        addLog(avgRes.message, "success");
+        if (avgRes.averaged) upd("averaged", avgRes.averaged);
+      } else {
+        addLog(avgRes.message || "Averager failed", "error");
+      }
+    } catch (err) {
+      addLog(`Averager: ${err.message}`, "error");
+    }
+
+    upd("pipelineStep", 3);
+    addLog("Running Analysis…", "step");
+    try {
+      const regRes = await runRegression();
+      if (regRes.success) {
+        addLog(regRes.message, "success");
+        if (regRes.plot_results) upd("plotResults", regRes.plot_results);
+        if (regRes.regression)   upd("regression",  regRes.regression);
+        if (regRes.analysis)     upd("analysis",    regRes.analysis);
+        if (regRes.plots_base)   upd("plotsDir",    regRes.plots_base);
+      } else {
+        addLog(regRes.message || "Analysis failed", "error");
+      }
+    } catch (err) {
+      addLog(`Analysis: ${err.message}`, "error");
+    }
+
+    upd("simStatus",    "done");
+    upd("pipelineStep", null);
+    addLog("Pipeline complete", "success");
+    setTimeout(() => setTab("DataAnalysis"), 800);
+  }, [s, upd, addLog, setTab]);
+
+  const handleRunSimOnly = useCallback(async () => {
+    upd("simStatus",    "running");
+    upd("simError",     "");
+    upd("pipelineStep", 1);
+
+    const body = _buildSimBody(s);
+    addLog(`Settings: ${body._filename}`, "info");
+    addLog("Running ONE simulator…", "step");
 
     try {
-      const res = await runAverager(buildBody());
-      if (res.success !== false) {
-        addLog("Averager complete", "success");
+      let simOk = false;
+      await generateReports(body, (ev) => {
+        if (ev.type === "log")           addLog(ev.message, ev.level || "output");
+        else if (ev.type === "complete") { simOk = ev.success; addLog(ev.message, ev.success ? "success" : "error"); }
+      });
+      upd("simStatus",    simOk ? "sim_done" : "error");
+      upd("pipelineStep", null);
+      if (!simOk) upd("simError", "Simulation failed — check console");
+    } catch (err) {
+      addLog(err.message, "error");
+      upd("simStatus",    "error");
+      upd("simError",     err.message);
+      upd("pipelineStep", null);
+    }
+  }, [s, upd, addLog]);
+
+  const handleAverager = useCallback(async () => {
+    upd("simStatus", "averaging");
+    upd("simError",  "");
+    upd("averaged",  null);
+    addLog("Running Averager…", "step");
+    try {
+      const res = await runAverager();
+      if (res.success) {
+        addLog(res.message, "success");
         if (res.averaged) upd("averaged", res.averaged);
         upd("simStatus", "averaged");
       } else {
@@ -102,25 +133,24 @@ export function useSimulation(s, upd, addLog, setTab) {
     } catch (err) {
       addLog(err.message, "error");
       upd("simStatus", "error");
-      upd("simError", err.message);
+      upd("simError",  err.message);
     }
-  }, [s, upd, addLog, buildBody]);
+  }, [upd, addLog]);
 
-  // Analysis / Regression 
   const handleAnalysis = useCallback(async () => {
-    upd("simStatus", "analysing");
-    upd("simError", "");
+    upd("simStatus",   "analysing");
+    upd("simError",    "");
     upd("plotResults", null);
-    upd("regression", null);
-    addLog("Running Analysis + Regression…", "step");
-
+    upd("regression",  null);
+    addLog("Running Analysis…", "step");
     try {
-      const res = await runRegression(buildBody());
-      if (res.success !== false) {
-        addLog("Analysis complete", "success");
+      const res = await runRegression();
+      if (res.success) {
+        addLog(res.message, "success");
         if (res.plot_results) upd("plotResults", res.plot_results);
-        if (res.regression) upd("regression", res.regression);
-        if (res.analysis) upd("analysis", res.analysis);
+        if (res.regression)   upd("regression",  res.regression);
+        if (res.analysis)     upd("analysis",    res.analysis);
+        if (res.plots_base)   upd("plotsDir",    res.plots_base);
         upd("simStatus", "analysed");
         setTimeout(() => setTab("DataAnalysis"), 600);
       } else {
@@ -129,21 +159,16 @@ export function useSimulation(s, upd, addLog, setTab) {
     } catch (err) {
       addLog(err.message, "error");
       upd("simStatus", "error");
-      upd("simError", err.message);
+      upd("simError",  err.message);
     }
-  }, [s, upd, addLog, setTab, buildBody]);
+  }, [upd, addLog, setTab]);
 
-  // Stop
   const handleStop = useCallback(async () => {
-    upd("simStatus", "idle");
+    upd("simStatus",    "idle");
     upd("pipelineStep", null);
     addLog("Termination requested", "warning");
-    try {
-      await terminate();
-    } catch {
-      /* ignore */
-    }
+    try { await terminate(); } catch {}
   }, [upd, addLog]);
 
-  return { handleRun, handleStop, handleAverager, handleAnalysis };
+  return { handleRun, handleRunSimOnly, handleAverager, handleAnalysis, handleStop };
 }

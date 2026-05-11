@@ -10,7 +10,7 @@ export function useLogger(setS) {
       const ts = new Date().toTimeString().slice(0, 8);
       setS((p) => ({
         ...p,
-        consoleLogs: [...p.consoleLogs, { msg, level, ts }],
+        consoleLogs: [...p.consoleLogs, { msg, level, ts }].slice(-200),
       }));
     },
     [setS],
