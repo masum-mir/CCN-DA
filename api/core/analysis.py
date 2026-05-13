@@ -149,7 +149,7 @@ class SmartFileParser:
     def get_report_type(self, filename):
         """Extract report type from filename"""
         # Try to identify report type from filename
-        for report_type in self.config.get('report_types', ['MessageStatsReport', 'CCNApplicationReporter']):
+        for report_type in self.config.get('report_types', ['MessageStatsReport', 'CCNApplicationReport']):
             if report_type in filename:
                 return report_type
         return 'Unknown'

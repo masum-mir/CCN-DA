@@ -81,8 +81,8 @@ export function initState() {
       okMaps: "",
     },
 
-    reports: ["CCNApplicationReporter", "MessageStatsReport"],
-    reportClass: "CCNApplicationReporter",
+    reports: ["CCNApplicationReport", "MessageStatsReport"],
+    reportClass: "CCNApplicationReport",
     reportWarmup: 0,
     reportDir: "reports/",
 

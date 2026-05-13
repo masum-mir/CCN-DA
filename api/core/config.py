@@ -37,14 +37,14 @@ DEFAULT_BATCH_CFG: dict = {
             "output_template": "{report_type}_{router}_{buffer}_buffer_average.txt",
         },
     ],
-    "report_types": ["MessageStatsReport", "CCNApplicationReporter"],
+    "report_types": ["MessageStatsReport", "CCNApplicationReport"],
 }
 
 DEFAULT_ANALYSIS_CFG: dict = {
     "data_separator": ":",
     "directories":    {"report_dir": "reports/", "plots_dir": "plots/"},
     "file_patterns":  {"report_extension": ".txt"},
-    "report_types":   ["MessageStatsReport", "CCNApplicationReporter"],
+    "report_types":   ["MessageStatsReport", "CCNApplicationReport"],
     "enabled_plots":  {
         "line_plots":   True,
         "violin_plots": True,
