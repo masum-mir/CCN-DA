@@ -12,7 +12,7 @@ REPORT_METRICS: dict = {
         "oppo_cache_hit", "oppo_cache_miss",
         "drop_pit", "drop_nonce", "drop_list",
         "duplicated_query", "average_interval",
-        "retrieval_latency_reduction", "caching_gain_index",
+        "retrieval_latency_reduction", "caching_gain_index", "dissemination_efficiency"
     ],
 }
 
@@ -31,7 +31,6 @@ METRIC_LABELS: dict = {
     "dropped":                     "Messages Dropped",
     "query_count":                 "Query Count",
     "response_count":              "Response Count",
-    "interest_satisfaction_rate":  "Interest Satisfaction Rate",
     "static_cache_hit":            "Static Cache Hits",
     "static_cache_miss":           "Static Cache Misses",
     "oppo_cache_hit":              "Opportunistic Cache Hits",
@@ -43,6 +42,9 @@ METRIC_LABELS: dict = {
     "average_interval":            "Average Interval (s)",
     "retrieval_latency_reduction": "Retrieval Latency Reduction",
     "caching_gain_index":          "Caching Gain Index",
+    "interest_satisfaction_rate":  "Interest Satisfaction Rate",
+    "dissemination_efficiency":     "Dissemination Efficiency"
+
 }
 
 COLORS:  list = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f"]
